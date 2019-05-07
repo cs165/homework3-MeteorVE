@@ -39,7 +39,7 @@ class App {
 
   _bind(main){
     var choices = document.querySelectorAll('.choice');
-    console.log(choices);
+    // console.log(choices);
     var a = 'aa';
     for (var x of choices) {
       x.onclick = this.choices_touched.bind(this);

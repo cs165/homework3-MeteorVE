@@ -65,43 +65,67 @@ class Flashcard {
   }
 
   addListener(){
-    let target = document.getElementById("flashcard-container");
-    target.addEventListener('pointerdown', this.onDragStart);
-    target.addEventListener('pointermove', this.onDragMove);
-    target.addEventListener('pointerup', this.onDragEnd);    
-
-
+    this.target = document.querySelector(".flashcard-box");
+    this.target.addEventListener('pointerdown', this.onDragStart.bind(this));
+    this.target.addEventListener('pointermove', this.onDragMove.bind(this));
+    this.target.addEventListener('pointerup', this.onDragEnd.bind(this));    
   }
 
   onDragStart(event) {
     event.preventDefault();
+    console.log("onDragStart");
+    
     this.originX = event.clientX;
     this.originY = event.clientY;
-    console.log(this.originX);
+    console.log(this.target);
 
     this.dragStarted = true;
     event.currentTarget.setPointerCapture(event.pointerId);
   }
 
   onDragMove(event) {
-    if (!this.dragStart) {
+    
+    console.log("!this.dragStarted = " + !this.dragStarted);
+    if (!this.dragStarted) {
       return;
     }
-    console.log(this);
-    // event.preventDefault();
-
+    console.log("onDragMove");
+    //event.preventDefault();
+    
     const deltaX = event.clientX - this.originX;
     const deltaY = event.clientY - this.originY;
-    const translateX = offsetX + deltaX;
-    const translateY = offsetY + deltaY;
-    event.currentTarget.style.transform = 'translate(' +
-      translateX + 'px, ' + translateY + 'px)';
+    console.log("deltaX : " + deltaX);
+
+    if (deltaX >= 150){
+      document.body.style.backgroundColor = "#97b7b7";
+      let correct = document.querySelector(".status .correct");
+      console.log(correct.innerHTML);
+      correct.innerHTML = "" + (Number(correct.innerHTML)+1);
+    } else if (deltaX <= -150){
+      document.body.style.backgroundColor = "#97b7b7";
+
+    }
+
+    const translateX = this.offsetX + deltaX;
+    const translateY = this.offsetY + deltaY;
+    // event.currentTarget.style.transform = 'translate(' +
+    //   translateX + 'px, ' + translateY + 'px)';
+    this.target.style.transform = 'translate(' +
+      translateX + 'px, ' + translateY + 'px) rotate(' + 0.2 * deltaX + 'deg)';
+      
   }
 
   onDragEnd(event) {
-    this.dragStart = false;
+    console.log("onDragEnd ------------------");
+
+    this.dragStarted = false;
     this.offsetX += event.clientX - this.originX;
     this.offsetY += event.clientY - this.originY;
+    console.log("offsetX : " + this.offsetX);
+
+    // reset 
+    document.body.style.backgroundColor = "#d0e6df";
+    
   }
   
 }

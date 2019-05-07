@@ -16,6 +16,15 @@ class Flashcard {
     this.containerElement.append(this.flashcardElement);
 
     this.flashcardElement.addEventListener('pointerup', this._flipCard);
+
+
+    this.originX = null;
+    this.originY = null;
+    this.offsetX = 0;
+    this.offsetY = 0;
+    this.dragStarted = false;
+    this.addListener();
+    
   }
 
   // Creates the DOM object representing a flashcard with the given
@@ -54,4 +63,45 @@ class Flashcard {
   _flipCard(event) {
     this.flashcardElement.classList.toggle('show-word');
   }
+
+  addListener(){
+    let target = document.getElementById("flashcard-container");
+    target.addEventListener('pointerdown', this.onDragStart);
+    target.addEventListener('pointermove', this.onDragMove);
+    target.addEventListener('pointerup', this.onDragEnd);    
+
+
+  }
+
+  onDragStart(event) {
+    event.preventDefault();
+    this.originX = event.clientX;
+    this.originY = event.clientY;
+    console.log(this.originX);
+
+    this.dragStarted = true;
+    event.currentTarget.setPointerCapture(event.pointerId);
+  }
+
+  onDragMove(event) {
+    if (!this.dragStart) {
+      return;
+    }
+    console.log(this);
+    // event.preventDefault();
+
+    const deltaX = event.clientX - this.originX;
+    const deltaY = event.clientY - this.originY;
+    const translateX = offsetX + deltaX;
+    const translateY = offsetY + deltaY;
+    event.currentTarget.style.transform = 'translate(' +
+      translateX + 'px, ' + translateY + 'px)';
+  }
+
+  onDragEnd(event) {
+    this.dragStart = false;
+    this.offsetX += event.clientX - this.originX;
+    this.offsetY += event.clientY - this.originY;
+  }
+  
 }

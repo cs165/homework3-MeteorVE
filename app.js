@@ -32,7 +32,7 @@ class App {
   }
 
   choices_touched(){
-    console.log(this);
+    // console.log(this);
     this.menu.hide();
     this.flashcards.show();
   }

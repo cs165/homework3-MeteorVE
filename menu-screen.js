@@ -18,4 +18,19 @@ class MenuScreen {
   hide() {
     this.containerElement.classList.add('inactive');
   }
+
+  add_choices(){
+    // hardcore
+    var choices = document.getElementById("choices");
+    
+    
+    for (var i = 0; i < FLASHCARD_DECKS.length; i++){
+      var nDiv = document.createElement("div");
+      nDiv.classList.add("choice");
+      nDiv.innerHTML = FLASHCARD_DECKS[i].title;
+      choices.appendChild(nDiv);
+      console.log("pause!");
+      
+    }
+  }
 }

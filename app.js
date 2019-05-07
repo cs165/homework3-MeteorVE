@@ -11,6 +11,9 @@ class App {
   constructor() {
     const menuElement = document.querySelector('#menu');
     this.menu = new MenuScreen(menuElement);
+    this.menu.add_choices();
+    this._bind();
+    this.choices_touched = this.choices_touched.bind(this);
 
     const mainElement = document.querySelector('#main');
     this.flashcards = new FlashcardScreen(mainElement);
@@ -19,11 +22,25 @@ class App {
     this.results = new ResultsScreen(resultElement);
 
     // Uncomment this pair of lines to see the "flashcard" screen:
-    // this.menu.hide();
-    // this.flashcards.show();
+    //this.menu.hide();
+    //this.flashcards.show();
 
     // Uncomment this pair of lines to see the "results" screen:
     // this.menu.hide();
     // this.results.show();
+  }
+
+  choices_touched(){
+    this.menu.hide();
+    this.flashcards.show();
+  }
+
+  _bind(){
+    var choices = document.querySelectorAll('.choice');
+    console.log(choices);
+
+    for (var x of choices) {
+      x.onclick = this.choices_touched;
+    }
   }
 }

@@ -22,6 +22,9 @@ class App {
     const resultElement = document.querySelector('#results');
     this.results = new ResultsScreen(resultElement);
 
+
+
+
     // Uncomment this pair of lines to see the "flashcard" screen:
     // this.menu.hide();
     // this.flashcards.show();
@@ -46,5 +49,15 @@ class App {
     for (var x of choices) {
       x.onclick = this.choices_touched.bind(this, x.innerHTML);
     }
+
+    document.querySelector('.to-menu').onclick =  this.go_to_menu.bind(this);
+  
   }
+
+  go_to_menu(){
+    this.menu.show();
+    this.results.hide();
+  }
+  
+
 }

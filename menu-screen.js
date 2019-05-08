@@ -29,7 +29,6 @@ class MenuScreen {
       nDiv.classList.add("choice");
       nDiv.innerHTML = FLASHCARD_DECKS[i].title;
       choices.appendChild(nDiv);
-      console.log("pause!");
       
     }
   }

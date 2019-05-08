@@ -12,10 +12,12 @@ class FlashcardScreen {
     this.containerElement = containerElement;
   }
 
-  show() {
+  show(inner) {
     this.containerElement.classList.remove('inactive');
     const flashcardContainer = document.querySelector('#flashcard-container');
     const card = new Flashcard(flashcardContainer, 'word', 'definition');
+    console.log("[here] : "+ inner);
+    
   }
 
   hide() {

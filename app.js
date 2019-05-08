@@ -31,10 +31,12 @@ class App {
     // this.results.show();
   }
 
-  choices_touched(){
-    // console.log(this);
+  choices_touched(inner){
+    console.log("[here] : " + this);
+    console.log(this);
+    
     this.menu.hide();
-    this.flashcards.show();
+    this.flashcards.show(inner);
   }
 
   _bind(main){
@@ -42,7 +44,7 @@ class App {
     // console.log(choices);
     var a = 'aa';
     for (var x of choices) {
-      x.onclick = this.choices_touched.bind(this);
+      x.onclick = this.choices_touched.bind(this, x.innerHTML);
     }
   }
 }

@@ -58,6 +58,7 @@ class App {
     this.menu.show();
     this.results.hide();
     this.results.reset();
+    this.flashcards.reset();
 
   }
   

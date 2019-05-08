@@ -14,19 +14,33 @@ class FlashcardScreen {
     this.words = null;
     this.title = null;
     this.words_list = null;
-    this.wrong_arr = [];
+    this.right_arr = [];
   }
 
   rebuild_words(){
-    for(word in this.wrong_arr){
-      let idx = words.findIndex(word);
-      this.words = this.words.splice(idx, 1);
-      this.words_list = this.words_list.splice(idx, 1);
+    for (let word of this.right_arr){
+      console.log("[debug] : " + word);
+      
+      let idx = this.words.indexOf(word);
+      console.log("[words] : " + this.words);
+      let tmp = [this.words];
+      //console.log(this.words.splice(idx, 1));
+      
+      tmp = this.words.splice(idx, 1);
+      tmp = this.words_list.splice(idx, 1);
+
+      //this.words_list = this.words_list.splice(idx, 1).slice();
+      console.log("[words] : " + this.words);
+
     }
+    
+    console.log(this.words);
+    
+    this.right_arr = [];
   }
 
-  append_wrong_record(){
-    this.wrong_arr.push(this.words[this.current_card_id]);
+  append_right_record(){
+    this.right_arr.push(this.words[this.current_card_id]);
   }
 
   get_next_card(){
@@ -42,7 +56,7 @@ class FlashcardScreen {
 
   show(inner) {
     this.containerElement.classList.remove('inactive');
-    this.reset();
+    //this.reset();
 
     this.title = inner;
     for(let i=0; i< FLASHCARD_DECKS.length; i++){
@@ -53,6 +67,11 @@ class FlashcardScreen {
     }
 
     console.log("[here] : " + this.words_list);
+    this.new_card(this.words[this.current_card_id], this.words_list[this.current_card_id]);
+  }
+
+  reshow(){
+    this.containerElement.classList.remove('inactive');
     this.new_card(this.words[this.current_card_id], this.words_list[this.current_card_id]);
   }
 

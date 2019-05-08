@@ -28,17 +28,27 @@ class ResultsScreen {
     document.getElementsByClassName("percent")[0].innerHTML = 100*this.total_right/(this.total_wrong+this.total_right);
     if (100 * this.total_right / (this.total_wrong + this.total_right) != 100){
       document.getElementsByClassName("continue")[0].innerHTML = "Continue";
-      // document.getElementsByClassName("continue")[0].onclick = 
+      document.getElementsByClassName("continue")[0].onclick = this.continue.bind(this);
     }else{
       document.getElementsByClassName("continue")[0].innerHTML = "Start over?";
-      // document.getElementsByClassName("continue")[0].onclick = 
+      document.getElementsByClassName("continue")[0].onclick = this.start_over.bind(this);
 
     }
   }
 
   start_over(){
     this.hide();
+    this.total_right = 0;
+    app.flashcards.current_card_id = 0;
     app.flashcards.show(app.flashcards.title);
+  }
+
+  continue(){
+    this.hide();
+    app.flashcards.rebuild_words();
+    this.total_wrong = 0;
+    app.flashcards.current_card_id = 0;
+    app.flashcards.reshow();
   }
 
   update_result(){

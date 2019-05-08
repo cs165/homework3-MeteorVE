@@ -73,7 +73,8 @@ class Flashcard {
   }
 
   _flipCard(event) {
-    this.flashcardElement.classList.toggle('show-word');
+    
+      this.flashcardElement.classList.toggle('show-word');
   }
 
   addListener() {
@@ -158,6 +159,7 @@ class Flashcard {
       console.log("[Work ? ] Line 157");
       app.results.update_result();
       document.getElementById("flashcard-container").innerHTML = "";
+      app.flashcards.append_right_record();
       app.flashcards.get_next_card();
 
     } else if (this.deltaX <= -150) {
@@ -170,7 +172,6 @@ class Flashcard {
       app.results.update_result();
       document.getElementById("flashcard-container").innerHTML = "";
       app.flashcards.get_next_card();
-      //app.flashcards.append_wrong_record();
 
     } else {
       this.target.style.transform = '';

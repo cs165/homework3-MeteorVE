@@ -25,6 +25,8 @@ class Flashcard {
     this.dragStarted = false;
     this.addListener();
     
+    this.right = 0; 
+    this.wrong = 0;
   }
 
   // Creates the DOM object representing a flashcard with the given
@@ -79,6 +81,11 @@ class Flashcard {
     this.originY = event.clientY;
     console.log(this.target);
 
+    this.right = Number(document.querySelector(".status .correct").innerHTML);
+    this.wrong = Number(document.querySelector(".status .incorrect").innerHTML);
+
+    //console.log("right : " + this.right);
+    
     this.dragStarted = true;
     event.currentTarget.setPointerCapture(event.pointerId);
   }
@@ -92,39 +99,73 @@ class Flashcard {
     console.log("onDragMove");
     //event.preventDefault();
     
-    const deltaX = event.clientX - this.originX;
-    const deltaY = event.clientY - this.originY;
-    console.log("deltaX : " + deltaX);
+    this.deltaX = event.clientX - this.originX;
+    this.deltaY = event.clientY - this.originY;
+    //console.log("deltaX : " + this.deltaX);
 
-    if (deltaX >= 150){
+    if (this.deltaX >= 150){
       document.body.style.backgroundColor = "#97b7b7";
-      let correct = document.querySelector(".status .correct");
-      console.log(correct.innerHTML);
-      correct.innerHTML = "" + (Number(correct.innerHTML)+1);
-    } else if (deltaX <= -150){
+      document.querySelector(".status .correct").innerHTML = "" + Number(this.right+1);
+
+    } else if (this.deltaX <= -150){
       document.body.style.backgroundColor = "#97b7b7";
+      document.querySelector(".status .incorrect").innerHTML = "" + Number(this.wrong+1);
+
+    } else {
+      document.querySelector(".status .correct").innerHTML = "" + Number(this.right);
+      document.querySelector(".status .incorrect").innerHTML = "" + Number(this.wrong);
+
 
     }
 
-    const translateX = this.offsetX + deltaX;
-    const translateY = this.offsetY + deltaY;
+    this.translateX = this.offsetX + this.deltaX;
+    this.translateY = this.offsetY + this.deltaY;
     // event.currentTarget.style.transform = 'translate(' +
     //   translateX + 'px, ' + translateY + 'px)';
     this.target.style.transform = 'translate(' +
-      translateX + 'px, ' + translateY + 'px) rotate(' + 0.2 * deltaX + 'deg)';
+      this.translateX + 'px, ' + this.translateY + 'px) rotate(' + 0.2 * this.deltaX + 'deg)';
       
   }
 
   onDragEnd(event) {
     console.log("onDragEnd ------------------");
-
+    console.log(this.translateX, this.translateY);
+    
     this.dragStarted = false;
+
     this.offsetX += event.clientX - this.originX;
     this.offsetY += event.clientY - this.originY;
-    console.log("offsetX : " + this.offsetX);
+    console.log("offsetX : " + this.offsetX + " offsetY : " + this.offsetY);
+
+    console.log("[in DragEnd] : this.deltaX : " + this.deltaX + " this.deltaY" + this.deltaY);
+    
 
     // reset 
-    document.body.style.backgroundColor = "#d0e6df";
+    if (this.deltaX >= 150) {
+      document.body.style.backgroundColor = "#d0e6df";
+      
+      this.target.style.transform = '';
+      this.target.style.transitionDuration  =  "0.5s";
+      console.log(this.target.style.transform);
+
+    } else if (this.deltaX <= -150) {
+      document.body.style.backgroundColor = "#d0e6df";
+      this.target.style.transform = '';
+      this.target.style.transitionDuration = "0.5s";
+      document.querySelector(".status .correct").innerHTML = "" + Number(this.right);
+
+    } else {
+      this.target.style.transform = '';
+      this.target.style.transitionDuration = "0.5s";
+      document.body.style.backgroundColor = "#d0e6df";
+      document.querySelector(".status .correct").innerHTML = "" + Number(this.right);
+    }
+    this.offsetX = 0;
+    this.offsetY = 0;
+    this.originX = null;
+    this.originY = null;
+
+    //document.body.style.backgroundColor = "#d0e6df";
     
   }
   

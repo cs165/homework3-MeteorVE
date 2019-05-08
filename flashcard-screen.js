@@ -30,12 +30,12 @@ class FlashcardScreen {
   }
 
   get_next_card(){
-    console.log("work ? line 33");
     
     this.current_card_id++;
     if(this.current_card_id == this.words.length){
       this.hide();
       app.results.show();
+      return;
     }
     this.new_card(this.words[this.current_card_id], this.words_list[this.current_card_id] );
   }
@@ -61,8 +61,6 @@ class FlashcardScreen {
   }
 
   new_card(word, def){
-    console.log("[Work?]");
-
     const flashcardContainer = document.querySelector('#flashcard-container');
     
     const card = new Flashcard(flashcardContainer, word, def);

@@ -42,10 +42,13 @@ class ResultsScreen {
   }
 
   update_result(){
-    console.log("[why you down ?]");
-    
     document.querySelector("#results .correct").innerHTML = "" + Number(this.total_right);
     document.querySelector("#results .incorrect").innerHTML = "" + Number(this.total_wrong);
 
+  }
+
+  reset(){
+    this.total_right = 0;
+    this.total_wrong = 0;
   }
 }

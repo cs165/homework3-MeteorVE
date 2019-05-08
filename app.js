@@ -57,6 +57,8 @@ class App {
   go_to_menu(){
     this.menu.show();
     this.results.hide();
+    this.results.reset();
+
   }
   
 

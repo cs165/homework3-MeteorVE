@@ -165,8 +165,11 @@ class Flashcard {
     this.originX = null;
     this.originY = null;
 
+    app.flashcards.hide();
+
     //document.body.style.backgroundColor = "#d0e6df";
     
   }
+
   
 }

@@ -91,6 +91,7 @@ class Flashcard {
     this.originX = event.clientX;
     this.originY = event.clientY;
     console.log(this.target);
+    this.target.style.transitionDuration = "";
 
 
     //console.log("right : " + this.right);
